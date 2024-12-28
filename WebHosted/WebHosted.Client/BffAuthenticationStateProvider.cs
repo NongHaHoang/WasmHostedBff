@@ -5,10 +5,6 @@ using System.Security.Claims;
 
 namespace WebHosted.Client;
 
-public static class Config
-{
-}
-
 public class BffAuthenticationStateProvider(HttpClient client, ILogger<BffAuthenticationStateProvider> logger) : AuthenticationStateProvider
 {
     private static readonly TimeSpan UserCacheRefreshInterval = TimeSpan.FromSeconds(60);
@@ -65,14 +61,5 @@ public class BffAuthenticationStateProvider(HttpClient client, ILogger<BffAuthen
         }
 
         return new ClaimsPrincipal(new ClaimsIdentity());
-    }
-}
-
-public class AntiforgeryHandler : DelegatingHandler
-{
-    protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
-    {
-        request.Headers.Add("X-CSRF", "1");
-        return base.SendAsync(request, cancellationToken);
     }
 }
