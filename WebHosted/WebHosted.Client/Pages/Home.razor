@@ -1,0 +1,47 @@
+﻿@page "/"
+
+<PageTitle>Home</PageTitle>
+
+<h1>Hello, Blazor BFF!</h1>
+
+<AuthorizeView>
+    <Authorized>
+        <dl>
+            @foreach (var claim in @context.User.Claims)
+            {
+                <dt>@claim.Type</dt>
+                <dd>@claim.Value</dd>
+            }
+        </dl>
+    </Authorized>
+</AuthorizeView>
+
+<button @onclick="TestAPIClicked">
+    Test API
+</button>
+
+<span>Message: @Message</span>
+
+@code 
+{
+    [Inject(Key = "WebAPI")]
+    private HttpClient WebAPIClient { get; set; } = null!;
+
+    private string Message { get; set; } = string.Empty;
+
+    private async Task TestAPIClicked()
+    {
+        var response = await WebAPIClient.GetAsync("api/WeatherForecast");
+
+        if (response.IsSuccessStatusCode)
+        {
+            Message = await response.Content.ReadAsStringAsync();
+        }
+        else 
+        {
+            Message = response.ReasonPhrase;
+        }
+
+        StateHasChanged();
+    }
+}
