@@ -11,9 +11,9 @@ builder.Services.AddRazorComponents()
 builder.Services.AddControllers();
 
 builder.Services.AddBff(options =>
-{
-    options.RevokeRefreshTokenOnLogout = false;
-})
+    {
+        options.RevokeRefreshTokenOnLogout = false;
+    })
     .AddRemoteApis();
 
 builder.Services.AddAuthentication(options =>
