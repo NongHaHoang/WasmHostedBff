@@ -13,12 +13,9 @@ builder.Services.AddHttpClient("backend", client => client.BaseAddress = new Uri
     .AddHttpMessageHandler<AntiforgeryHandler>();
 builder.Services.AddTransient(sp => sp.GetRequiredService<IHttpClientFactory>().CreateClient("backend"));
 
-var apiAddress = "https://localhost:7075";
-var identityServerAddress = "https://localhost:5001";
-
-builder.Services.AddHttpClient("ISAPI", client => client.BaseAddress = new Uri(identityServerAddress))
+builder.Services.AddHttpClient("ISAPI", client => client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress))
     .AddHttpMessageHandler<AntiforgeryHandler>();
-builder.Services.AddHttpClient("WebAPI", client => client.BaseAddress = new Uri(apiAddress))
+builder.Services.AddHttpClient("WebAPI", client => client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress))
     .AddHttpMessageHandler<AntiforgeryHandler>();
 
 builder.Services

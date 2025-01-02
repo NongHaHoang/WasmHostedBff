@@ -90,7 +90,7 @@ app.MapControllers()
     .RequireAuthorization()
     .AsBffApiEndpoint();
 
-app.MapRemoteBffApiEndpoint("/api/WeatherForecast", "https://localhost:7075")
+app.MapRemoteBffApiEndpoint("/api/WeatherForecast", "https://localhost:7075/api/WeatherForecast")
     .RequireAccessToken(Duende.Bff.TokenType.User)
     .SkipAntiforgery();
 
